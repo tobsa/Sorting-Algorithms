@@ -10,6 +10,7 @@
 #include <random>
 #include <functional>
 #include "Source/BasicSortingAlgorithms.hpp"
+#include "Source/TreeSort.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Print a vector
@@ -27,19 +28,9 @@ void fillVector(std::vector<int>& v, int size, int min, int max);
 bool verifySort(const std::vector<int>& v);
 
 ////////////////////////////////////////////////////////////////////////////////
-// Handle bubble sort
+// Sort a vector by a sorting function
 ////////////////////////////////////////////////////////////////////////////////
-void handleBubbleSort(std::vector<int>& v);
-
-////////////////////////////////////////////////////////////////////////////////
-// Handle selection sort
-////////////////////////////////////////////////////////////////////////////////
-void handleSelectionSort(std::vector<int>& v);
-
-////////////////////////////////////////////////////////////////////////////////
-// Handle insertion sort
-////////////////////////////////////////////////////////////////////////////////
-void handleInsertionSort(std::vector<int>& v);
+void handleSort(std::vector<int>& v, std::function<void(std::vector<int>&)> f, const std::string& name);
 
 const int MaxVectorSize = 25;
 
@@ -58,19 +49,20 @@ int main()
 			      << " 1. Bubble Sort!"           << std::endl
 			      << " 2. Selection Sort!"        << std::endl
 			      << " 3. Insertion Sort!"        << std::endl
-				  << " 4. Exit program!"          << std::endl 
+				  << " 4. Tree Sort!"             << std::endl
+				  << " 5. Exit program!"          << std::endl 
 				  << "Choice: ";
 		char value;
 		std::cin >> value;
 		std::cout << std::endl;
 
 		// Make sure the input is valid
-		if(value < '1' || value > '4')
+		if(value < '1' || value > '5')
 		{
 			std::cout << "Not valid input!. Choose between 1-45." << std::endl << std::endl;
 			continue;
 		}
-		else if(value == '4')
+		else if(value == '5')
 		{
 			quit = true;
 		}
@@ -85,9 +77,10 @@ int main()
 
 			switch(value)
 			{
-				case '1': handleBubbleSort(v);    break;
-				case '2': handleSelectionSort(v); break;
-				case '3': handleInsertionSort(v); break;
+				case '1': handleSort(v, bubbleSort,    "Bubble Sort");    break;
+				case '2': handleSort(v, selectionSort, "Selection Sort"); break;
+				case '3': handleSort(v, insertionSort, "Insertion Sort"); break;
+				case '4': handleSort(v, treeSort,      "Tree Sort");      break;
 			}
 		}
 	}
@@ -146,48 +139,14 @@ bool verifySort(const std::vector<int>& v)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void handleBubbleSort(std::vector<int>& v)
+void handleSort(std::vector<int>& v, std::function<void(std::vector<int>&)> f, const std::string& name)
 {
-	std::cout << std::endl << "----- Bubble Sort (" << v.size() << ") -----" << std::endl;
+	std::cout << std::endl << "----- " << name << " (" << v.size() << ") -----" << std::endl;
 
 	if(v.size() <= MaxVectorSize)
 		printVector(v, false);
 
-	bubbleSort(v);
-
-	if(v.size() <= MaxVectorSize)
-		printVector(v, false);
-
-	verifySort(v) ? std::cout << " Sorted!" : std::cout << " Unsorted!";
-	std::cout << std::endl << std::endl;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-void handleSelectionSort(std::vector<int>& v)
-{
-	std::cout << std::endl << "----- Selection Sort (" << v.size() << ") -----" << std::endl;
-
-	if(v.size() <= MaxVectorSize)
-		printVector(v, false);
-
-	selectionSort(v);
-
-	if(v.size() <= MaxVectorSize)
-		printVector(v, false);
-
-	verifySort(v) ? std::cout << " Sorted!" : std::cout << " Unsorted!";
-	std::cout << std::endl << std::endl;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-void handleInsertionSort(std::vector<int>& v)
-{
-	std::cout << std::endl << "----- Insertion Sort (" << v.size() << ") -----" << std::endl;
-
-	if(v.size() <= MaxVectorSize)
-		printVector(v, false);
-
-	insertionSort(v);
+	f(v);
 
 	if(v.size() <= MaxVectorSize)
 		printVector(v, false);
