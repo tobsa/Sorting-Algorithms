@@ -9,8 +9,10 @@
 #include <string>
 #include <random>
 #include <functional>
+#include <algorithm>
 #include "Source/BasicSortingAlgorithms.hpp"
 #include "Source/TreeSort.hpp"
+#include "Source/HeapSort.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Print a vector
@@ -20,7 +22,12 @@ void printVector(const std::vector<int>& v, bool newline = false);
 ////////////////////////////////////////////////////////////////////////////////
 // Fill a vector with random numbers
 ////////////////////////////////////////////////////////////////////////////////
-void fillVector(std::vector<int>& v, int size, int min, int max);
+void randomFill(std::vector<int>& v, int size, int min, int max);
+
+////////////////////////////////////////////////////////////////////////////////
+// Fill a vector with numbers between min and max
+////////////////////////////////////////////////////////////////////////////////
+void linearFill(std::vector<int>& v, int min, int max);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Verify if the vector is sorted
@@ -48,33 +55,50 @@ int main()
 		std::cout << "Choose sorting algorithm: " << std::endl 
 			      << " 1. Bubble Sort!"           << std::endl
 			      << " 2. Selection Sort!"        << std::endl
-			      << " 3. Insertion Sort!"        << std::endl
-				  << " 4. Tree Sort!"             << std::endl
-				  << " 5. Exit program!"          << std::endl 
-				  << "Choice: ";
+		          << " 3. Insertion Sort!"        << std::endl
+		          << " 4. Tree Sort!"             << std::endl
+		          << " 5. Heap Sort!"             << std::endl
+		          << " 6. Exit program!"          << std::endl 
+		          << "Choice: ";
 		char value;
 		std::cin >> value;
 		std::cout << std::endl;
 
 		// Make sure the input is valid
-		if(value < '1' || value > '5')
+		if(value < '1' || value > '6')
 		{
 			std::cout << "Not valid input!. Choose between 1-45." << std::endl << std::endl;
 			continue;
 		}
 		else if(value == '5')
 		{
+			// Get input
+			std::cout << "Enter a min and max value: ";
+			int min, max;
+			std::cin >> min >> max;
+
+			// Fill the vector and then shuffle it (we do this because heap sort requires unique elements in the vector)
+			linearFill(v, min, max);
+			std::random_shuffle(v.begin(), v.end());
+
+			heapSort(v);
+
+		}
+		else if(value == '6')
+		{
 			quit = true;
 		}
 		else
 		{
-			// Enter vector size, min and max value
-			std::cout << "Enter vector size, min and max value ([size][min][max]): ";
+			// Get input
+			std::cout << "Enter vector size, min and max value: ";
 			int size, min, max;
 			std::cin >> size >> min >> max;
 
-			fillVector(v, size, min, max);
+			// Fill with random numbers
+			randomFill(v, size, min, max);
 
+			// Decide what sorting algorithm to use
 			switch(value)
 			{
 				case '1': handleSort(v, bubbleSort,    "Bubble Sort");    break;
@@ -107,7 +131,7 @@ void printVector(const std::vector<int>& v, bool newline)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void fillVector(std::vector<int>& v, int size, int min, int max)
+void randomFill(std::vector<int>& v, int size, int min, int max)
 {
 	// Make sure we have an empty vector
 	v.clear();
@@ -122,6 +146,15 @@ void fillVector(std::vector<int>& v, int size, int min, int max)
 	// Fill the vector with random numbers
 	for(int i = 0; i < size; ++i)
 		v.push_back(generator());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void linearFill(std::vector<int>& v, int min, int max)
+{
+	v.clear();
+
+	for(int i = min; i <= max; ++i)
+		v.push_back(i);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
