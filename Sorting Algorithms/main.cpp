@@ -37,6 +37,10 @@ int main()
 	bubbleSort(v);
 	verifySort(v,"Bubble Sort");
 
+	fillVector(v,10,0,10);
+	selectionSort(v);
+	verifySort(v,"Selection Sort");
+
 	std::cin.get();
 	return 0;
 }
@@ -88,7 +92,7 @@ void verifySort(const std::vector<int>& v,const std::string& name)
 	bool sorted = true;
 
 	// Check if the vector is sorted
-	for(std::size_t i = 0; i < v.size() - 1; i++)
+	for(std::size_t i = 0; i < v.size() - 1; ++i)
 	{
 		// If the next element is smaller than the previous one then the vector is not sorted
 		if(v[i] > v[i + 1])
