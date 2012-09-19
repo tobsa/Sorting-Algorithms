@@ -81,7 +81,7 @@ int main()
 			linearFill(v, min, max);
 			std::random_shuffle(v.begin(), v.end());
 
-			heapSort(v);
+			handleSort(v, heapSort, "Heap Sort");
 
 		}
 		else if(value == '6')
