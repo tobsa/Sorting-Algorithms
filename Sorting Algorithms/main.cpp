@@ -33,13 +33,17 @@ int main()
 {
 	std::vector<int> v;
 
-	fillVector(v,10,0,10);
+	fillVector(v,100,0,100);
 	bubbleSort(v);
-	verifySort(v,"Bubble Sort");
+	verifySort(v, "Bubble Sort");
 
-	fillVector(v,10,0,10);
+	fillVector(v,100,0,100);
 	selectionSort(v);
-	verifySort(v,"Selection Sort");
+	verifySort(v, "Selection Sort");
+
+	fillVector(v,100,0,100);
+	insertionSort(v);
+	verifySort(v, "Insertion Sort");
 
 	std::cin.get();
 	return 0;
