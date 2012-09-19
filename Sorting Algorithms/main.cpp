@@ -24,7 +24,24 @@ void fillVector(std::vector<int>& v, int size, int min, int max);
 ////////////////////////////////////////////////////////////////////////////////
 // Verify if the vector is sorted
 ////////////////////////////////////////////////////////////////////////////////
-void verifySort(const std::vector<int>& v,const std::string& name);
+bool verifySort(const std::vector<int>& v);
+
+////////////////////////////////////////////////////////////////////////////////
+// Handle bubble sort
+////////////////////////////////////////////////////////////////////////////////
+void handleBubbleSort(std::vector<int>& v);
+
+////////////////////////////////////////////////////////////////////////////////
+// Handle selection sort
+////////////////////////////////////////////////////////////////////////////////
+void handleSelectionSort(std::vector<int>& v);
+
+////////////////////////////////////////////////////////////////////////////////
+// Handle insertion sort
+////////////////////////////////////////////////////////////////////////////////
+void handleInsertionSort(std::vector<int>& v);
+
+const int MaxVectorSize = 25;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Entry point of application
@@ -33,24 +50,52 @@ int main()
 {
 	std::vector<int> v;
 
-	fillVector(v,100,0,100);
-	bubbleSort(v);
-	verifySort(v, "Bubble Sort");
+	bool quit = false;
+	while(!quit)
+	{
+		// Choose algorithm
+		std::cout << "Choose sorting algorithm: " << std::endl 
+			      << " 1. Bubble Sort!"           << std::endl
+			      << " 2. Selection Sort!"        << std::endl
+			      << " 3. Insertion Sort!"        << std::endl
+				  << " 4. Exit program!"          << std::endl 
+				  << "Choice: ";
+		char value;
+		std::cin >> value;
+		std::cout << std::endl;
 
-	fillVector(v,100,0,100);
-	selectionSort(v);
-	verifySort(v, "Selection Sort");
+		// Make sure the input is valid
+		if(value < '1' || value > '4')
+		{
+			std::cout << "Not valid input!. Choose between 1-45." << std::endl << std::endl;
+			continue;
+		}
+		else if(value == '4')
+		{
+			quit = true;
+		}
+		else
+		{
+			// Enter vector size, min and max value
+			std::cout << "Enter vector size, min and max value ([size][min][max]): ";
+			int size, min, max;
+			std::cin >> size >> min >> max;
 
-	fillVector(v,100,0,100);
-	insertionSort(v);
-	verifySort(v, "Insertion Sort");
+			fillVector(v, size, min, max);
+
+			switch(value)
+			{
+				case '1': handleBubbleSort(v);    break;
+				case '2': handleSelectionSort(v); break;
+				case '3': handleInsertionSort(v); break;
+			}
+		}
+	}
 
 	std::cin.get();
 	return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Print a vector
 ////////////////////////////////////////////////////////////////////////////////
 void printVector(const std::vector<int>& v, bool newline)
 {
@@ -64,10 +109,10 @@ void printVector(const std::vector<int>& v, bool newline)
 		for(std::size_t i = 0; i < v.size(); ++i)
 			std::cout << v[i] << " ";
 	}
+
+	std::cout << std::endl;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Fill a vector with random numbers
 ////////////////////////////////////////////////////////////////////////////////
 void fillVector(std::vector<int>& v, int size, int min, int max)
 {
@@ -87,21 +132,66 @@ void fillVector(std::vector<int>& v, int size, int min, int max)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Verify if the vector is sorted
-////////////////////////////////////////////////////////////////////////////////
-void verifySort(const std::vector<int>& v,const std::string& name)
+bool verifySort(const std::vector<int>& v)
 {
-	std::cout << std::endl << "----- " << name << " (" << v.size() << ") -----" << std::endl;
-
-	bool sorted = true;
-
 	// Check if the vector is sorted
 	for(std::size_t i = 0; i < v.size() - 1; ++i)
 	{
 		// If the next element is smaller than the previous one then the vector is not sorted
 		if(v[i] > v[i + 1])
-			sorted = false;
+			return false;
 	}
 
-	sorted ? std::cout << " Sorted!" << std::endl : std::cout << " Unsorted!" << std::endl;
+	return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void handleBubbleSort(std::vector<int>& v)
+{
+	std::cout << std::endl << "----- Bubble Sort (" << v.size() << ") -----" << std::endl;
+
+	if(v.size() <= MaxVectorSize)
+		printVector(v, false);
+
+	bubbleSort(v);
+
+	if(v.size() <= MaxVectorSize)
+		printVector(v, false);
+
+	verifySort(v) ? std::cout << " Sorted!" : std::cout << " Unsorted!";
+	std::cout << std::endl << std::endl;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void handleSelectionSort(std::vector<int>& v)
+{
+	std::cout << std::endl << "----- Selection Sort (" << v.size() << ") -----" << std::endl;
+
+	if(v.size() <= MaxVectorSize)
+		printVector(v, false);
+
+	selectionSort(v);
+
+	if(v.size() <= MaxVectorSize)
+		printVector(v, false);
+
+	verifySort(v) ? std::cout << " Sorted!" : std::cout << " Unsorted!";
+	std::cout << std::endl << std::endl;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void handleInsertionSort(std::vector<int>& v)
+{
+	std::cout << std::endl << "----- Insertion Sort (" << v.size() << ") -----" << std::endl;
+
+	if(v.size() <= MaxVectorSize)
+		printVector(v, false);
+
+	insertionSort(v);
+
+	if(v.size() <= MaxVectorSize)
+		printVector(v, false);
+
+	verifySort(v) ? std::cout << " Sorted!" : std::cout << " Unsorted!";
+	std::cout << std::endl << std::endl;
 }
