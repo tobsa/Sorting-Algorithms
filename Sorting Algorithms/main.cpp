@@ -13,6 +13,7 @@
 #include "Source/BasicSortingAlgorithms.hpp"
 #include "Source/TreeSort.hpp"
 #include "Source/HeapSort.hpp"
+#include "Source/MergeSort.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Print a vector
@@ -57,20 +58,21 @@ int main()
 			      << " 2. Selection Sort!"        << std::endl
 		          << " 3. Insertion Sort!"        << std::endl
 		          << " 4. Tree Sort!"             << std::endl
-		          << " 5. Heap Sort!"             << std::endl
-		          << " 6. Exit program!"          << std::endl 
+		          << " 5. Merge Sort!"            << std::endl
+	              << " 6. Heap Sort!"             << std::endl
+		          << " 7. Exit program!"          << std::endl 
 		          << "Choice: ";
 		char value;
 		std::cin >> value;
 		std::cout << std::endl;
 
 		// Make sure the input is valid
-		if(value < '1' || value > '6')
+		if(value < '1' || value > '7')
 		{
 			std::cout << "Not valid input!. Choose between 1-45." << std::endl << std::endl;
 			continue;
 		}
-		else if(value == '5')
+		else if(value == '6')
 		{
 			// Get input
 			std::cout << "Enter a min and max value: ";
@@ -84,7 +86,7 @@ int main()
 			handleSort(v, heapSort, "Heap Sort");
 
 		}
-		else if(value == '6')
+		else if(value == '7')
 		{
 			quit = true;
 		}
@@ -105,6 +107,7 @@ int main()
 				case '2': handleSort(v, selectionSort, "Selection Sort"); break;
 				case '3': handleSort(v, insertionSort, "Insertion Sort"); break;
 				case '4': handleSort(v, treeSort,      "Tree Sort");      break;
+				case '5': handleSort(v, mergeSort,     "Merge Sort");     break;
 			}
 		}
 	}
