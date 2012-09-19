@@ -72,6 +72,7 @@ int main()
 			std::cout << "Not valid input!. Choose between 1-45." << std::endl << std::endl;
 			continue;
 		}
+		// Handle heap sort as a special case since it can't handle duplicate values in a vector
 		else if(value == '6')
 		{
 			// Get input
@@ -79,7 +80,7 @@ int main()
 			int min, max;
 			std::cin >> min >> max;
 
-			// Fill the vector and then shuffle it (we do this because heap sort requires unique elements in the vector)
+			// Fill the vector and then shuffle it
 			linearFill(v, min, max);
 			std::random_shuffle(v.begin(), v.end());
 
