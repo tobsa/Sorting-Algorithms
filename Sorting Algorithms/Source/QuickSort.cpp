@@ -1,0 +1,37 @@
+////////////////////////////////////////////////////////////////////////////////
+// QuickSort.cpp
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////////////////////////
+#include "QuickSort.hpp"
+
+static int partition(std::vector<int>& v, int lhs, int rhs)
+{
+	int pivot = v[lhs];
+	int i = lhs;
+	int j = rhs;
+
+	std::swap(v[i], v[j]);
+	std::swap(v[lhs], v[j]);
+
+	return j;
+}
+
+static void quickSort(std::vector<int>& v, int lhs, int rhs)
+{
+	if(lhs < rhs)
+	{
+		// Get the split position and quick sort the two halves seperately
+		int split = partition(v, lhs, rhs);
+		quickSort(v, lhs, split - 1);
+		quickSort(v, split + 1, rhs);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void quickSort(std::vector<int>& v)
+{
+	quickSort(v, 0, v.size() - 1);
+}
