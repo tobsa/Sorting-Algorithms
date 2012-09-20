@@ -192,6 +192,6 @@ void handleSort(std::vector<int>& v, std::function<void(std::vector<int>&)> f, c
 	if(v.size() <= MaxVectorSize)
 		printVector(v, false);
 
-	verifySort(v) ? std::cout << " Sorted!" : std::cout << " Unsorted!";
+	verifySort(v) ? std::cout << " " << v.size() << " numbers is sorted!" : std::cout << " " << v.size() << " numbers is unsorted!";
 	std::cout << std::endl << std::endl;
 }
