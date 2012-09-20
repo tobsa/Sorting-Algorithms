@@ -54,6 +54,7 @@ int main()
 	while(!quit)
 	{
 		// Choose algorithm
+<<<<<<< HEAD
 		std::cout << "Choose sorting algorithm: ";
 		std::cout << " 1. Bubble Sort!"    << std::endl;
 		std::cout << " 2. Selection Sort!" << std::endl;
@@ -64,6 +65,17 @@ int main()
 		std::cout << " 7. Heap Sort!"      << std::endl;
 		std::cout << " 8. Exit program!"   << std::endl;
 		std::cout << "Choose: ";
+=======
+		std::cout << "Choose sorting algorithm: " << std::endl; 
+	    std::cout << " 1. Bubble Sort!"           << std::endl;
+		std::cout << " 2. Selection Sort!"        << std::endl;
+		std::cout << " 3. Insertion Sort!"        << std::endl;
+		std::cout << " 4. Tree Sort!"             << std::endl;
+		std::cout << " 5. Merge Sort!"            << std::endl;
+	    std::cout << " 6. Heap Sort!"             << std::endl;
+		std::cout << " 7. Exit program!"          << std::endl;
+		std::cout << "Choice: ";
+>>>>>>> a6e2269a107d5a0e39190adc2db1a6614765dedc
 
 		char value;
 		std::cin >> value;
