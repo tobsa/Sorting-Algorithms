@@ -54,7 +54,7 @@ int main()
 	while(!quit)
 	{
 		// Choose algorithm
-		std::cout << "Choose sorting algorithm: ";
+		std::cout << "Choose sorting algorithm: " << std::endl;
 		std::cout << " 1. Bubble Sort!"    << std::endl;
 		std::cout << " 2. Selection Sort!" << std::endl;
 		std::cout << " 3. Insertion Sort!" << std::endl;
@@ -65,7 +65,7 @@ int main()
 		std::cout << " 8. Exit program!"   << std::endl;
 		std::cout << "Choose: ";
 
-		char value;
+		char value = '6';
 		std::cin >> value;
 		std::cout << std::endl;
 
@@ -97,12 +97,12 @@ int main()
 		else
 		{
 			// Get input
-			//std::cout << "Enter vector size, min and max value: ";
-			//int size, min, max;
-			//std::cin >> size >> min >> max;
+			std::cout << "Enter vector size, min and max value: ";
+			int size, min, max;
+			std::cin >> size >> min >> max;
 
 			// Fill with random numbers
-			//randomFill(v, size, min, max);
+			randomFill(v, size, min, max);
 
 			// Decide what sorting algorithm to use
 			switch(value)
@@ -112,12 +112,7 @@ int main()
 				case '3': handleSort(v, insertionSort, "Insertion Sort"); break;
 				case '4': handleSort(v, treeSort,      "Tree Sort");      break;
 				case '5': handleSort(v, mergeSort,     "Merge Sort");     break;
-				case '6': 
-					v.clear();
-					v.push_back(3);
-					v.push_back(5);
-					
-					handleSort(v, quickSort,     "Quick Sort");     break;
+				case '6': handleSort(v, quickSort,     "Quick Sort");     break;
 			}
 		}
 	}
