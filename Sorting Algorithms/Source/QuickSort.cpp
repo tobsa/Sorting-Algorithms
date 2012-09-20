@@ -7,27 +7,39 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "QuickSort.hpp"
 
-static int partition(std::vector<int>& v, int lhs, int rhs)
+////////////////////////////////////////////////////////////////////////////////
+// Sort the vector with the quick sort algorithm
+////////////////////////////////////////////////////////////////////////////////
+static void quickSort(std::vector<int>& v, int lhs, int rhs)
 {
-	int pivot = v[lhs];
+	// Select pivot point
+	int pivot = v[(lhs + rhs) / 2];
 	int i = lhs;
 	int j = rhs;
 
-	std::swap(v[i], v[j]);
-	std::swap(v[lhs], v[j]);
-
-	return j;
-}
-
-static void quickSort(std::vector<int>& v, int lhs, int rhs)
-{
-	if(lhs < rhs)
+	do
 	{
-		// Get the split position and quick sort the two halves seperately
-		int split = partition(v, lhs, rhs);
-		quickSort(v, lhs, split - 1);
-		quickSort(v, split + 1, rhs);
-	}
+		// Find the next two indices that should be swapped
+		while(v[i] < pivot && i < rhs)
+			++i;
+		while(v[j] > pivot && j > lhs)
+			--j;
+
+		if(i <= j)
+		{
+			std::swap(v[i], v[j]),
+			++i;
+			--j;
+		}
+
+	}while(i <= j);
+
+	// Recursivly sort the two halves
+	if(lhs < j)
+		quickSort(v, lhs, j);
+	if(i < rhs)
+		quickSort(v, i, rhs);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
